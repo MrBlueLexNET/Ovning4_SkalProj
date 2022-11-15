@@ -130,7 +130,7 @@ namespace SkalProj_Datastrukturer_Minne
         {
 
             List<string> theList = new List<string>();
-            theList.Capacity = 10;//If the capacity is significantly larger than the count lower it and you will save memory
+            //theList.Capacity = 10;//If the capacity is significantly larger than the count lower it and you will save memory
             bool goOn = true;
             Console.WriteLine("Examines the datastructure List: Using + or - before you type Using [R] to resume");
             do {

@@ -7,9 +7,28 @@ namespace SkalProj_Datastrukturer_Minne.Tests
         {
             //Arrange
 
-            //Act
+            //a.ICA öppnar och kön till kassan är tom
+            Queue<string> queueTillKassaICA = new Queue<string>();
 
+            queueTillKassaICA.Enqueue("Kalle");//b.Kalle ställer sig i kön
+            queueTillKassaICA.Enqueue("Greta");//c.Greta ställer sig i kön
+            queueTillKassaICA.Dequeue();//d.Kalle blir expedierad och lämnar kön
+            queueTillKassaICA.Enqueue("Stina");//e.Stina ställer sig i kön
+            queueTillKassaICA.Dequeue();//f.Greta blir expedierad och lämnar kön
+            queueTillKassaICA.Enqueue("Olle");//g.Olle ställer sig i kön
+
+            int fourPeoplesInQueue = 2;
+            //string kallefirstInQueue = "Kalle"; TEST FAIL
+            string stinaFirstInQueue = "Stina"; //TEST PASS
+
+            //Act
+            int numberOfPeoplesInQueue = queueTillKassaICA.Count;
+            string firstInQueueICA = queueTillKassaICA.FirstOrDefault();
             //Assert
+            Assert.Equal(fourPeoplesInQueue, numberOfPeoplesInQueue);
+            //Assert.Equal(kallefirstInQueue, firstInQueueICA); TEST FAIL
+            //Assert.True(firstInQueueICA.Any()); TEST PASS
+            Assert.Equal(stinaFirstInQueue, firstInQueueICA);
         }
     }
 }
