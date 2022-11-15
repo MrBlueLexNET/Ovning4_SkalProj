@@ -187,7 +187,60 @@ namespace SkalProj_Datastrukturer_Minne
              * Create a switch with cases to enqueue items or dequeue items
              * Make sure to look at the queue after Enqueueing and Dequeueing to see how it behaves
             */
+
+            Queue<string> theQueue = new Queue<string>();
+            //theQueue.Capacity = 10;//If the capacity is significantly larger than the count lower it and you will save memory
+            bool goOn = true;
+            Console.WriteLine("Examines the datastructure Queue: Using + or - before you type Using [R] to resume");
+            do
+            {
+                string input = Console.ReadLine()!;
+                char nav = input[0];
+                string value = input.Substring(1);
+                switch (nav)
+                {
+                    case '+':
+                        theQueue.Enqueue(value);
+                        Console.WriteLine($"Count: {theQueue.Count}");
+                        // A queue can be enumerated without disturbing its contents.
+                        Console.WriteLine("\nContents of the Queue:");
+                        foreach (string item in theQueue)
+                        {
+                            Console.WriteLine(item);
+                        }
+                        break;
+                    case '-':
+                        if (theQueue.Count > 0) //Make sure that the Queue is not empty
+                        theQueue.Dequeue();
+                        
+                        Console.WriteLine($"Count: {theQueue.Count}");
+                        // A queue can be enumerated without disturbing its contents.
+                        Console.WriteLine("\nContents of the Queue:");
+                        foreach (string item in theQueue)
+                        {
+                            Console.WriteLine(item);
+                        }
+                        theQueue.TrimExcess();//Capacity ? 
+                        break;
+                    case 'R':
+                        theQueue.Clear();
+                        Console.Clear();
+                        goOn = false;
+                        break;
+                    default:
+                        Console.WriteLine("Only + and - prefixes are valid");
+                        break;
+                }
+            }
+            while (goOn);
         }
+
+        // 2. Implementera metoden TestQueue.Metoden ska simulera hur en kö fungerar
+        //genom att tillåta användaren att ställa element i kön(enqueue) och ta bort element
+        //ur kön(dequeue). Använd Queue-klassen till hjälp för att implementera metoden.
+        //Simulera sedan ICA-kön med hjälp av ditt program.
+
+        //TODO: xUnit  1. Create a unit test project 2. Adding a unit test
 
         /// <summary>
         /// Examines the datastructure Stack
