@@ -30,5 +30,20 @@ namespace SkalProj_Datastrukturer_Minne.Tests
             //Assert.True(firstInQueueICA.Any()); TEST PASS
             Assert.Equal(stinaFirstInQueue, firstInQueueICA);
         }
+        [Fact]
+        public void TestReverseText()
+        { 
+        
+        }
+        [Fact]
+        /*
+        * CheckParanthesis: method to check if the paranthesis in a string is Correct or incorrect.
+        * Example of correct: (()), {}, [({})],  List<int> list = new List<int>() { 1, 2, 3, 4 };
+        * Example of incorrect: (()]), [), {[()}],  List<int> list = new List<int>() { 1, 2, 3, 4 );
+        */
+        public void CheckParanthesis()
+        {
+
+        }
     }
 }
