@@ -2,6 +2,7 @@
 using System.Diagnostics.Metrics;
 using System.Drawing;
 using System.Net.Sockets;
+using System.Reflection;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Xml.Linq;
@@ -9,39 +10,39 @@ using System.Xml.Linq;
 namespace SkalProj_Datastrukturer_Minne
 {
 
-    //Frågor: Ref: E-Learning material and 
+    //Frågor: Ref: E-Learning material and GOOGLE
     //1. Hur fungerar stacken och heapen? Förklara gärna med exempel eller skiss på dess grundläggande funktion
     //Svar 1:
     /* Stack and Heap are different memory spaces. One is allocated to memory by the compiler and the other is allocated to another memory space at runtime.*/
+    /*
+    * Stack Memory *
+      It is an array of memory.
+      It is a LIFO (Last In First Out) data structure.
+      In it data can be added to and deleted only from the top of it.
+
+      Memory allocation is Static and variables can't be resized and access is fast.
+      Block allocation is reserverd in LIFO most reserved block is always the next block to be freed.
+
+      * Heap Memory *
+      It is an area of memory where chunks are allocated to store certain kinds of data objects.
+      In it data can be stored and removed in any order.
+
+       Memory allocation is Dynamic and variables can be resized and access is slow.
+       Its block allocation is free and done at any time.
+
+   /* The main differences between Value versus Reference Types are that:
+   1. Value type like int has a fixed size, allocated by the compiler on stack. The value is copied once on this memory location.
+   2. Reference type like Object are always allocated on the Heap but the pointer value is copied once on the stack. 
+   3. Refence type like Object can have multiple references on the stack for the same Object on the Heap */
     //2. Vad är Value Types repsektive Reference Types och vad skiljer dem åt?
     //Svar 2:
-    /*
-     * Stack Memory *
-       It is an array of memory.
-       It is a LIFO (Last In First Out) data structure.
-       In it data can be added to and deleted only from the top of it.
-	
-       Memory allocation is Static and variables can't be resized and access is fast.
-       Block allocation is reserverd in LIFO most reserved block is always the next block to be freed.
 
-       * Heap Memory *
-       It is an area of memory where chunks are allocated to store certain kinds of data objects.
-       In it data can be stored and removed in any order.
-
-        Memory allocation is Dynamic and variables can be resized and access is slow.
-        Its block allocation is free and done at any time.
-
-    /* The main differences between Value versus Reference Types are that:
-    1. Value type like int has a fixed size, allocated by the compiler on stack. The value is copied once on this memory location.
-    2. Reference type like Object are always allocated on the Heap but the pointer value is copied once on the stack. 
-    3. Refence type like Object can have multiple references on the stack for the same Object on the Heap */
     //3. Följande metoder(se bild nedan) genererar olika svar.Den första returnerar 3, den andra returnerar 4, varför?
     //Svar 3:
     /*ReturnValue Method is using the Stack to store int on separate values for x and y.
     When declaring y = x; it doesn't affect the value return for x even if the y value is not equal to x.
     x = y will be declare on the stack like x = 3 and y = 4.
-    ReturnValue2 Method is using the same reference name MyValue
-    for x and y.When first assigning value on the stack for 
+    ReturnValue2 Method is using the same reference name MyValue for x and y. When first assigning value on the stack for 
     x.MyValue and then making y = x implicitly y.MyValue will point to the same Object on the Heap.*/
 
     class Program
@@ -55,12 +56,14 @@ namespace SkalProj_Datastrukturer_Minne
 
             while (true)
             {
-                Console.WriteLine("Please navigate through the menu by inputting the number \n(1, 2, 3 ,4, 0) of your choice"
+                Console.WriteLine("Please navigate through the menu by inputting the number \n(1, 2, 3 ,4, 5, 0) of your choice"
                     + "\n1. Examine a List"
                     + "\n2. Examine a Queue"
                     + "\n3. Examine a Stack"
                     + "\n4. CheckParanthesis"
+                    + "\n5. ReverseText"
                     + "\n0. Exit the application");
+               
                 char input = ' '; //Creates the character input to be used with the switch-case below.
                 try
                 {
@@ -89,6 +92,9 @@ namespace SkalProj_Datastrukturer_Minne
                      * Extend the menu to include the recursive 
                      * and iterative exercises.
                      */
+                    case '5':
+                        ReverseText();
+                        break;
                     case '0':
                         Environment.Exit(0);
                         break;
@@ -132,7 +138,7 @@ namespace SkalProj_Datastrukturer_Minne
             List<string> theList = new List<string>();
             //theList.Capacity = 10;//If the capacity is significantly larger than the count lower it and you will save memory
             bool goOn = true;
-            Console.WriteLine("Examines the datastructure List: Using + or - before you type Using [R] to resume");
+            Console.WriteLine("Examines the datastructure List: Using [+] or [-] before you type | [R] to resume");
             do {
                 string input = Console.ReadLine()!;
                 char nav = input[0];
@@ -191,7 +197,7 @@ namespace SkalProj_Datastrukturer_Minne
             Queue<string> theQueue = new Queue<string>();
             //theQueue.Capacity = 10;//If the capacity is significantly larger than the count lower it and you will save memory
             bool goOn = true;
-            Console.WriteLine("Examines the datastructure Queue: Using + or - before you type Using [R] to resume");
+            Console.WriteLine("Examines the datastructure Queue: Using [+] or [-] before you type | [R] to resume");
             do
             {
                 string input = Console.ReadLine()!;
@@ -252,8 +258,83 @@ namespace SkalProj_Datastrukturer_Minne
              * Create a switch with cases to push or pop items
              * Make sure to look at the stack after pushing and and poping to see how it behaves
             */
-        }
 
+ 
+            Stack<string> theStack = new();
+            bool goOn = true;
+            Console.WriteLine("Examines the datastructure Stack: Using [+] or [-] before you type | [R] to resume");
+            do
+            {
+                string input = Console.ReadLine()!;
+                char nav = input[0];
+                string value = input.Substring(1);
+                switch (nav)
+                {
+                    case '+':
+                        theStack.Push(value);
+                        Console.WriteLine($"Count: {theStack.Count}");
+                        // A queue can be enumerated without disturbing its contents.
+                        Console.WriteLine("\nContents of the Queue:");
+                        foreach (string item in theStack)
+                        {
+                            Console.WriteLine(item);
+                        }
+                        break;
+                    case '-':
+                        if (theStack.Count > 0) //Make sure that the Queue is not empty
+                            theStack.Pop();
+
+                        Console.WriteLine($"Count: {theStack.Count}");
+                        // A queue can be enumerated without disturbing its contents.
+                        Console.WriteLine("\nContents of the Stack:");
+                        foreach (string item in theStack)
+                        {
+                            Console.WriteLine(item);
+                        }
+                        theStack.TrimExcess();//Capacity ? 
+                        break;
+                    case 'R':
+                        theStack.Clear();
+                        Console.Clear();
+                        goOn = false;
+                        break;
+                    default:
+                        Console.WriteLine("Only + and - prefixes are valid");
+                        break;
+                }
+            }
+            while (goOn);
+
+        }
+        //1. Simulera ännu en gång ICA-kön på papper.Denna gång med en stack.Varför är det inte så smart att använda en stack i det här fallet?
+        //Svar: Först In Sist Ut (FILO) principen passar inte för ICAs kassa men när det uppstår arbetsbrist på en arbetsplats sker uppsägningarna enligt den turordning (LAS).
+
+        //2. Implementera en ReverseText-metod som läser in en sträng från användaren och
+        //med hjälp av en stack vänder ordning på teckenföljden för att sedan skriva ut den
+        //omvända strängen till användaren.
+        static void ReverseText()
+        {
+
+            Stack<char> charStack = new Stack<char>();
+            Console.WriteLine("Type the text to reverse | [R] to resume");
+            string s = Console.ReadLine()!;
+
+            for (int i = 0; i < s.Length; i++)
+            {
+                char c = s[i];
+                charStack.Push(c);
+
+               
+            } 
+            Console.WriteLine("Text in revers:");
+            foreach (char item in charStack)
+            {
+                Console.Write(item);
+            }
+
+            Console.ReadLine();
+            Console.Clear();
+        }
         static void CheckParanthesis()
         {
             /*
@@ -261,6 +342,7 @@ namespace SkalProj_Datastrukturer_Minne
              * Example of correct: (()), {}, [({})],  List<int> list = new List<int>() { 1, 2, 3, 4 };
              * Example of incorrect: (()]), [), {[()}],  List<int> list = new List<int>() { 1, 2, 3, 4 );
              */
+
 
         }
 

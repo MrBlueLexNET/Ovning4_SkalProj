@@ -23,7 +23,7 @@ namespace SkalProj_Datastrukturer_Minne.Tests
 
             //Act
             int numberOfPeoplesInQueue = queueTillKassaICA.Count;
-            string firstInQueueICA = queueTillKassaICA.FirstOrDefault();
+            string firstInQueueICA = queueTillKassaICA.FirstOrDefault()!;
             //Assert
             Assert.Equal(fourPeoplesInQueue, numberOfPeoplesInQueue);
             //Assert.Equal(kallefirstInQueue, firstInQueueICA); TEST FAIL
