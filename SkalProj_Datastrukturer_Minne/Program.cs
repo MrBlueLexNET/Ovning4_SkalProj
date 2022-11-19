@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.Metrics;
 using System.Drawing;
 using System.Net.Sockets;
@@ -259,7 +261,6 @@ namespace SkalProj_Datastrukturer_Minne
              * Make sure to look at the stack after pushing and and poping to see how it behaves
             */
 
- 
             Stack<string> theStack = new();
             bool goOn = true;
             Console.WriteLine("Examines the datastructure Stack: Using [+] or [-] before you type | [R] to resume");
@@ -318,13 +319,10 @@ namespace SkalProj_Datastrukturer_Minne
             Stack<char> charStack = new Stack<char>();
             Console.WriteLine("Type the text to reverse | [R] to resume");
             string s = Console.ReadLine()!;
-
             for (int i = 0; i < s.Length; i++)
             {
                 char c = s[i];
-                charStack.Push(c);
-
-               
+                charStack.Push(c);            
             } 
             Console.WriteLine("Text in revers:");
             foreach (char item in charStack)
@@ -342,6 +340,84 @@ namespace SkalProj_Datastrukturer_Minne
              * Example of correct: (()), {}, [({})],  List<int> list = new List<int>() { 1, 2, 3, 4 };
              * Example of incorrect: (()]), [), {[()}],  List<int> list = new List<int>() { 1, 2, 3, 4 );
              */
+           
+
+            //TODO 1. Create a Dictionary Key type and Value Type 
+            Dictionary<char, char> paranthesisDico = new Dictionary<char, char>()
+            {
+                { '(',')' },  { '{','}' },  { '[',']' }
+            };
+
+            //TODO 2. foreach (loop other the Dico)
+
+            //foreach (KeyValuePair<char, char> element in paranthesisDico)
+            // Console.WriteLine($"{element.Key} and {element.Value}");
+
+            /**********************************************************************/
+            //Stack Collection in C#
+            //The Stack Collection is used when the data items need to be arranged in a LIFO (Last In First Out) manner.
+            //When a data item is entered into the collection, it is called push. When the data item is removed from the collection, it is called pop.
+
+            //string str = "((f[Hello World;]))";//Valid when using Queue Left and Stack Right
+            string str = "List<int> lista = new List<int>(){2, 3, 4};";//Valid when using Queue Left and Queue Right
+            //string str = "{{(}]";//Invalid
+
+            Stack<char> stackLeftParenthesis = new Stack<char>();//Define a stack for chars to be stored for retreiving left Parenthesis
+            Stack<char> stackRightParenthesis = new Stack<char>();//Define a stack for chars to be stored for retreiving right Parenthesis
+
+            Queue<char> queueLeftParenthesis = new Queue<char>();//Define a stack for chars to be stored for retreiving left Parenthesis
+            Queue<char> queueRightParenthesis = new Queue<char>();//Define a stack for chars to be stored for retreiving right Parenthesis
+
+
+            char[] ar = str.ToArray(); //Define an Char Array so we can hold the position of each char from the String 
+
+            //Need to count the Left and Right parentheses
+            //If the Left count is equal to the right count 
+            //Need to found if they are identical
+            char[] parenthesesArraylefts = new char[ar.Length];
+            char[] parenthesesArrayrights = new char[ar.Length];
+            char[] parenthesisArray = new char[ar.Length];
+
+
+            for (int i = 0; i < ar.Length; ++i)//Loop over the char array
+            {
+                //1. entered into the 2 collections make a push to lefts or rights Parantheses if found in the string
+                if (ar[i] == '(' || ar[i] == '[' || ar[i] == '{')
+                {
+                    stackLeftParenthesis.Push(ar[i]);//Found a left parathese push it to Stack left Parenthesis
+                    queueLeftParenthesis.Enqueue(ar[i]);//Found a left parathese push it to Queue left Parenthesis
+                    parenthesesArraylefts[i] = ar[i];//Position holder Array left
+                }
+
+                if (ar[i] == ')' || ar[i] == ']' || ar[i] == '}')
+                {
+                    stackRightParenthesis.Push(ar[i]);//Found a right parathese push it to Stack right Parenthesis
+                    queueRightParenthesis.Enqueue(ar[i]);//Found a left parathese push it to Queue left Parenthesis
+                    parenthesesArrayrights[i] = ar[i];//Position holder Array right
+                }
+
+            }
+
+            Console.WriteLine((stackLeftParenthesis.Count != stackRightParenthesis.Count) ? "Invalid: Failing to use parentheses" : "Valid: Well formated");
+            Console.ReadLine();
+            /**********************************************************************/
+            while (queueLeftParenthesis.Count > 0)
+
+            {
+                //Pop() will return the element that was removed from the stack
+                //Dequeue() will return the element that was removed from the stack
+
+                if ((queueLeftParenthesis.Peek() == '(') && (queueRightParenthesis.Peek() == ')') || (queueLeftParenthesis.Peek() == '{') && (queueRightParenthesis.Peek() == '}') || (queueLeftParenthesis.Peek() == '[') && (queueRightParenthesis.Peek() == ']'))
+                {
+                    // stackRightParenthesis.Pop();
+                    // stackLeftParenthesis.Pop();
+                    Console.WriteLine("The top value {0} was removed from the Right Queue", queueRightParenthesis.Dequeue());
+                    Console.WriteLine("The top value {0} was removed from the Left Queue", queueLeftParenthesis.Dequeue());
+                }
+
+                Console.WriteLine("Current queue count is: {0}", queueLeftParenthesis.Count);
+            }
+            /**********************************************************************/
 
 
         }
