@@ -48,6 +48,7 @@ namespace SkalProj_Datastrukturer_Minne
     ReturnValue2 Method is using the same reference name MyValue for x and y. When first assigning value on the stack for 
     x.MyValue and then making y = x implicitly y.MyValue will point to the same Object on the Heap.*/
 
+    //TODO: Exception thrown: 'System.IndexOutOfRangeException' use Try Catch block for all Methods not only the Main()
     class Program
     {
         /// <summary>
@@ -334,6 +335,9 @@ namespace SkalProj_Datastrukturer_Minne
             Console.ReadLine();
             Console.Clear();
         }
+        /// <summary>
+        /// Examines a string using Collections Queue or Stack and a Dictionary
+        /// </summary>
         static void CheckParanthesis()
         {
             /*
@@ -361,7 +365,7 @@ namespace SkalProj_Datastrukturer_Minne
 
             //string str = "((f[Hello World;]))";//Valid when using Queue Left and Stack Right
             //string str = "List<int> lista = new List<int>(){2, 3, 4};";//Valid when using Queue Left and Queue Right
-            string str = "List<int> list = new List<int>() { 1, 2, 3, 4 );";//Invalid
+            //string str = "{[()}";//Invalid
 
             Stack<char> stackLeftParenthesis = new Stack<char>();//Define a stack for chars to be stored for retreiving left Parenthesis
             Stack<char> stackRightParenthesis = new Stack<char>();//Define a stack for chars to be stored for retreiving right Parenthesis
@@ -369,6 +373,8 @@ namespace SkalProj_Datastrukturer_Minne
             Queue<char> queueLeftParenthesis = new Queue<char>();//Define a Queue for chars to be stored for retreiving left Parenthesis
             Queue<char> queueRightParenthesis = new Queue<char>();//Define a Queue for chars to be stored for retreiving right Parenthesis
 
+            Console.WriteLine("Check if the paranthesis in a string is Correct or incorrect | [R] to resume");
+            string str = Console.ReadLine()!;
 
             char[] ar = str.ToArray(); //Define an Char Array so we can hold the position of each char from the String 
 
@@ -400,9 +406,13 @@ namespace SkalProj_Datastrukturer_Minne
 
             }
 
-            Console.WriteLine((stackLeftParenthesis.Count != stackRightParenthesis.Count) ? "Invalid: Failing to use parentheses"  : "Valid: Well formated" , isValid = true) ;
-            Console.ReadLine();
+            Console.WriteLine((stackLeftParenthesis.Count != stackRightParenthesis.Count) ? "Wrong input: The number of left and right parenthesis are not equal"  : $"Correct number of parenthesis in {str}" ) ;
+            if (stackLeftParenthesis.Count == stackRightParenthesis.Count)
+                isValid = true ;
+
             /**********************************************************************/
+            if (isValid)
+            { 
             //foreach (loop other the Dico)
             foreach (KeyValuePair<char, char> element in paranthesisDico)
 
@@ -410,25 +420,24 @@ namespace SkalProj_Datastrukturer_Minne
                 Console.WriteLine($"{element.Key} and {element.Value}");
 
                 for (int i = 0; i < queueLeftParenthesis.Count; i++)
-                //while (queueLeftParenthesis.Count > 0)
-
-                {
-                    //Pop() will return the element that was removed from the stack
-                    //Dequeue() will return the element that was removed from the stack
-
+                { 
                     if ((queueLeftParenthesis.Peek() == element.Key) && (queueRightParenthesis.Peek() == element.Value))
                     {
-                        // stackRightParenthesis.Pop();
-                        // stackLeftParenthesis.Pop();
+
                         Console.WriteLine("The top value {0} was removed from the Right Queue", queueRightParenthesis.Dequeue());
                         Console.WriteLine("The top value {0} was removed from the Left Queue", queueLeftParenthesis.Dequeue());
                     }
-
-                    Console.WriteLine("Current queue count is: {0}", queueLeftParenthesis.Count);
+                    
+                    //Console.WriteLine("Current queue count is: {0}", queueLeftParenthesis.Count);
+                    
                 }
             }
+            }
+            if (queueLeftParenthesis.Count >= 1) isValid = false;
             /**********************************************************************/
-
+        Console.WriteLine((isValid is true ) ? $"{str}: Is valid" : $"{str}: Not valid");
+        Console.ReadKey();
+        Console.Clear();
 
         }
 
