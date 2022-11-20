@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
@@ -348,6 +349,10 @@ namespace SkalProj_Datastrukturer_Minne
              * Example of incorrect: (()]), [), {[()}],  List<int> list = new List<int>() { 1, 2, 3, 4 );
              */
 
+            //FIXED: 2 Manual tests failed to pass validation. Double check the logic!
+            //(()) Not valid!should be correct
+            //string str = "[({})]";
+            //[({ })] Not valid!should be correct
 
             //1. Create a Dictionary Key type and Value Type 
             Dictionary<char, char> paranthesisDico = new Dictionary<char, char>()
@@ -416,26 +421,47 @@ namespace SkalProj_Datastrukturer_Minne
             if (isValid)
             {
                 //foreach (loop other the Dico)
-                foreach (KeyValuePair<char, char> element in paranthesisDico)
 
-                {
-                    Console.WriteLine($"{element.Key} and {element.Value}");
 
-                    for (int i = 0; i < queueLeftParenthesis.Count; i++)
+                //for (int i = 0; i < queueLeftParenthesis.Count; i++)
+
+                do
+                { 
+
+                    foreach (KeyValuePair<char, char> element in paranthesisDico)
+
                     {
-                        if ((queueLeftParenthesis.Peek() == element.Key) && (queueRightParenthesis.Peek() == element.Value))
+                        //Console.WriteLine($"{element.Key} and {element.Value}");
+                        if (queueLeftParenthesis.Any()) //IMPORTANT
                         {
-
-                            Console.WriteLine("The top value {0} was removed from the Right Queue", queueRightParenthesis.Dequeue());
-                            Console.WriteLine("The top value {0} was removed from the Left Queue", queueLeftParenthesis.Dequeue());
+                            //if ((queueLeftParenthesis.Peek() == element.Key && stackRightParenthesis.Peek() == element.Value)) //FIXED TODO: 2 Manual tests failed to pass validation. Double check the logic! Error introduce when using foreach (loop other the Dico)!!!
+                            if ((queueLeftParenthesis.Peek() == '(') && (stackRightParenthesis.Peek() == ')') || (queueLeftParenthesis.Peek() == '{') && (stackRightParenthesis.Peek() == '}') || (queueLeftParenthesis.Peek() == '[') && (stackRightParenthesis.Peek() == ']'))                                                                                                //if ((queueLeftParenthesis.Peek() == '(') && (queueRightParenthesis.Peek() == ')') || (queueLeftParenthesis.Peek() == '{') && (queueRightParenthesis.Peek() == '}') || (queueLeftParenthesis.Peek() == '[') && (queueRightParenthesis.Peek() == ']'))
+                            {
+                                Console.WriteLine("The top value {0} was removed from the Left Queue", queueLeftParenthesis.Dequeue());
+                                Console.WriteLine("The top value {0} was removed from the Right Stack", stackRightParenthesis.Pop());
+                            }
+                            else 
+                            {
+                                queueLeftParenthesis.Dequeue();
+                                isValid = false;
+                            }
+                            
+                            //}
+                            Console.WriteLine("Current queue count is: {0}", queueLeftParenthesis.Count);
                         }
-
-                        //Console.WriteLine("Current queue count is: {0}", queueLeftParenthesis.Count);
-
                     }
-                }
+                        
+                    } while (queueLeftParenthesis.Count > 0) ;
+                    
+                 }
+
+
+            if (queueLeftParenthesis.Count == stackRightParenthesis.Count)
+            { 
+                isValid = true;
             }
-            if (queueLeftParenthesis.Count >= 1) isValid = false;
+              
+
             /**********************************************************************/
             Console.WriteLine((isValid is true) ? $"{str}: Is valid" : $"{str}: Not valid");
             Console.ReadKey();
