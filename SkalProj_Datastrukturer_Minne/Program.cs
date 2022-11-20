@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.Metrics;
@@ -342,31 +343,31 @@ namespace SkalProj_Datastrukturer_Minne
              */
            
 
-            //TODO 1. Create a Dictionary Key type and Value Type 
+            //1. Create a Dictionary Key type and Value Type 
             Dictionary<char, char> paranthesisDico = new Dictionary<char, char>()
             {
                 { '(',')' },  { '{','}' },  { '[',']' }
             };
 
-            //TODO 2. foreach (loop other the Dico)
-
-            //foreach (KeyValuePair<char, char> element in paranthesisDico)
-            // Console.WriteLine($"{element.Key} and {element.Value}");
 
             /**********************************************************************/
             //Stack Collection in C#
-            //The Stack Collection is used when the data items need to be arranged in a LIFO (Last In First Out) manner.
-            //When a data item is entered into the collection, it is called push. When the data item is removed from the collection, it is called pop.
+            //Used when the data items need to be arranged in a LIFO (Last In First Out) manner.
+
+            //Queue Collection in C#
+            //Used when the data items need to be arranged in a FIFO (First In First Out) manner.
+            /**********************************************************************/
+
 
             //string str = "((f[Hello World;]))";//Valid when using Queue Left and Stack Right
-            string str = "List<int> lista = new List<int>(){2, 3, 4};";//Valid when using Queue Left and Queue Right
-            //string str = "{{(}]";//Invalid
+            //string str = "List<int> lista = new List<int>(){2, 3, 4};";//Valid when using Queue Left and Queue Right
+            string str = "List<int> list = new List<int>() { 1, 2, 3, 4 );";//Invalid
 
             Stack<char> stackLeftParenthesis = new Stack<char>();//Define a stack for chars to be stored for retreiving left Parenthesis
             Stack<char> stackRightParenthesis = new Stack<char>();//Define a stack for chars to be stored for retreiving right Parenthesis
 
-            Queue<char> queueLeftParenthesis = new Queue<char>();//Define a stack for chars to be stored for retreiving left Parenthesis
-            Queue<char> queueRightParenthesis = new Queue<char>();//Define a stack for chars to be stored for retreiving right Parenthesis
+            Queue<char> queueLeftParenthesis = new Queue<char>();//Define a Queue for chars to be stored for retreiving left Parenthesis
+            Queue<char> queueRightParenthesis = new Queue<char>();//Define a Queue for chars to be stored for retreiving right Parenthesis
 
 
             char[] ar = str.ToArray(); //Define an Char Array so we can hold the position of each char from the String 
@@ -378,6 +379,7 @@ namespace SkalProj_Datastrukturer_Minne
             char[] parenthesesArrayrights = new char[ar.Length];
             char[] parenthesisArray = new char[ar.Length];
 
+            bool isValid = false;
 
             for (int i = 0; i < ar.Length; ++i)//Loop over the char array
             {
@@ -398,24 +400,32 @@ namespace SkalProj_Datastrukturer_Minne
 
             }
 
-            Console.WriteLine((stackLeftParenthesis.Count != stackRightParenthesis.Count) ? "Invalid: Failing to use parentheses" : "Valid: Well formated");
+            Console.WriteLine((stackLeftParenthesis.Count != stackRightParenthesis.Count) ? "Invalid: Failing to use parentheses"  : "Valid: Well formated" , isValid = true) ;
             Console.ReadLine();
             /**********************************************************************/
-            while (queueLeftParenthesis.Count > 0)
+            //foreach (loop other the Dico)
+            foreach (KeyValuePair<char, char> element in paranthesisDico)
 
             {
-                //Pop() will return the element that was removed from the stack
-                //Dequeue() will return the element that was removed from the stack
+                Console.WriteLine($"{element.Key} and {element.Value}");
 
-                if ((queueLeftParenthesis.Peek() == '(') && (queueRightParenthesis.Peek() == ')') || (queueLeftParenthesis.Peek() == '{') && (queueRightParenthesis.Peek() == '}') || (queueLeftParenthesis.Peek() == '[') && (queueRightParenthesis.Peek() == ']'))
+                for (int i = 0; i < queueLeftParenthesis.Count; i++)
+                //while (queueLeftParenthesis.Count > 0)
+
                 {
-                    // stackRightParenthesis.Pop();
-                    // stackLeftParenthesis.Pop();
-                    Console.WriteLine("The top value {0} was removed from the Right Queue", queueRightParenthesis.Dequeue());
-                    Console.WriteLine("The top value {0} was removed from the Left Queue", queueLeftParenthesis.Dequeue());
-                }
+                    //Pop() will return the element that was removed from the stack
+                    //Dequeue() will return the element that was removed from the stack
 
-                Console.WriteLine("Current queue count is: {0}", queueLeftParenthesis.Count);
+                    if ((queueLeftParenthesis.Peek() == element.Key) && (queueRightParenthesis.Peek() == element.Value))
+                    {
+                        // stackRightParenthesis.Pop();
+                        // stackLeftParenthesis.Pop();
+                        Console.WriteLine("The top value {0} was removed from the Right Queue", queueRightParenthesis.Dequeue());
+                        Console.WriteLine("The top value {0} was removed from the Left Queue", queueLeftParenthesis.Dequeue());
+                    }
+
+                    Console.WriteLine("Current queue count is: {0}", queueLeftParenthesis.Count);
+                }
             }
             /**********************************************************************/
 
