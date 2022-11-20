@@ -67,7 +67,7 @@ namespace SkalProj_Datastrukturer_Minne
                     + "\n4. CheckParanthesis"
                     + "\n5. ReverseText"
                     + "\n0. Exit the application");
-               
+
                 char input = ' '; //Creates the character input to be used with the switch-case below.
                 try
                 {
@@ -80,8 +80,8 @@ namespace SkalProj_Datastrukturer_Minne
                 }
                 switch (input)
                 {
-                    case '1':    
-                        ExamineList();                                     
+                    case '1':
+                        ExamineList();
                         break;
                     case '2':
                         ExamineQueue();
@@ -143,7 +143,8 @@ namespace SkalProj_Datastrukturer_Minne
             //theList.Capacity = 10;//If the capacity is significantly larger than the count lower it and you will save memory
             bool goOn = true;
             Console.WriteLine("Examines the datastructure List: Using [+] or [-] before you type | [R] to resume");
-            do {
+            do
+            {
                 string input = Console.ReadLine()!;
                 char nav = input[0];
                 string value = input.Substring(1);
@@ -167,7 +168,7 @@ namespace SkalProj_Datastrukturer_Minne
                         Console.WriteLine("Only + and - prefixes are valid");
                         break;
                 }
-            } 
+            }
             while (goOn);
 
         }
@@ -221,8 +222,8 @@ namespace SkalProj_Datastrukturer_Minne
                         break;
                     case '-':
                         if (theQueue.Count > 0) //Make sure that the Queue is not empty
-                        theQueue.Dequeue();
-                        
+                            theQueue.Dequeue();
+
                         Console.WriteLine($"Count: {theQueue.Count}");
                         // A queue can be enumerated without disturbing its contents.
                         Console.WriteLine("\nContents of the Queue:");
@@ -324,8 +325,8 @@ namespace SkalProj_Datastrukturer_Minne
             for (int i = 0; i < s.Length; i++)
             {
                 char c = s[i];
-                charStack.Push(c);            
-            } 
+                charStack.Push(c);
+            }
             Console.WriteLine("Text in revers:");
             foreach (char item in charStack)
             {
@@ -345,7 +346,7 @@ namespace SkalProj_Datastrukturer_Minne
              * Example of correct: (()), {}, [({})],  List<int> list = new List<int>() { 1, 2, 3, 4 };
              * Example of incorrect: (()]), [), {[()}],  List<int> list = new List<int>() { 1, 2, 3, 4 );
              */
-           
+
 
             //1. Create a Dictionary Key type and Value Type 
             Dictionary<char, char> paranthesisDico = new Dictionary<char, char>()
@@ -406,40 +407,68 @@ namespace SkalProj_Datastrukturer_Minne
 
             }
 
-            Console.WriteLine((stackLeftParenthesis.Count != stackRightParenthesis.Count) ? "Wrong input: The number of left and right parenthesis are not equal"  : $"Correct number of parenthesis in {str}" ) ;
+            Console.WriteLine((stackLeftParenthesis.Count != stackRightParenthesis.Count) ? "Wrong input: The number of left and right parenthesis are not equal" : $"Correct number of parenthesis in {str}");
             if (stackLeftParenthesis.Count == stackRightParenthesis.Count)
-                isValid = true ;
+                isValid = true;
 
             /**********************************************************************/
             if (isValid)
-            { 
-            //foreach (loop other the Dico)
-            foreach (KeyValuePair<char, char> element in paranthesisDico)
-
             {
-                Console.WriteLine($"{element.Key} and {element.Value}");
+                //foreach (loop other the Dico)
+                foreach (KeyValuePair<char, char> element in paranthesisDico)
 
-                for (int i = 0; i < queueLeftParenthesis.Count; i++)
-                { 
-                    if ((queueLeftParenthesis.Peek() == element.Key) && (queueRightParenthesis.Peek() == element.Value))
+                {
+                    Console.WriteLine($"{element.Key} and {element.Value}");
+
+                    for (int i = 0; i < queueLeftParenthesis.Count; i++)
                     {
+                        if ((queueLeftParenthesis.Peek() == element.Key) && (queueRightParenthesis.Peek() == element.Value))
+                        {
 
-                        Console.WriteLine("The top value {0} was removed from the Right Queue", queueRightParenthesis.Dequeue());
-                        Console.WriteLine("The top value {0} was removed from the Left Queue", queueLeftParenthesis.Dequeue());
+                            Console.WriteLine("The top value {0} was removed from the Right Queue", queueRightParenthesis.Dequeue());
+                            Console.WriteLine("The top value {0} was removed from the Left Queue", queueLeftParenthesis.Dequeue());
+                        }
+
+                        //Console.WriteLine("Current queue count is: {0}", queueLeftParenthesis.Count);
+
                     }
-                    
-                    //Console.WriteLine("Current queue count is: {0}", queueLeftParenthesis.Count);
-                    
                 }
-            }
             }
             if (queueLeftParenthesis.Count >= 1) isValid = false;
             /**********************************************************************/
-        Console.WriteLine((isValid is true ) ? $"{str}: Is valid" : $"{str}: Not valid");
-        Console.ReadKey();
-        Console.Clear();
+            Console.WriteLine((isValid is true) ? $"{str}: Is valid" : $"{str}: Not valid");
+            Console.ReadKey();
+            Console.Clear();
 
         }
-
+        //Rekursion
+        /// <summary>
+        /// Övning 5: Rekursion
+        /// </summary>
+        //Denna metoden gör är att se efter om n är 1, om så returerar den det första udda talet 1.
+        //Annars så anropar den sig själv för ett mindre n och lägger till två.
+        static int RecusiveOds(int n)
+        {
+            
+            if (n == 1)
+            {
+                return 1;
+            }
+            return RecusiveOds((n -1) + 2);
+        }
+        //Iteration
+        /// <summary>
+        /// Övning 6: Iteration
+        /// </summary>
+        // Denna metod börjar från 1 och adderar 2 till dess att resultat blir det n:te udda talet.
+        static int IterativeOds(int n)
+        {
+            int result = 1;
+            for (int i = 0; i < n - 1; i++)
+            { 
+                result += 2;
+            }
+            return result;
+        }
     }
 }
