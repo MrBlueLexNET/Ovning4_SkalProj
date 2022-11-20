@@ -51,6 +51,7 @@ namespace SkalProj_Datastrukturer_Minne
     //TODO: Exception thrown: 'System.IndexOutOfRangeException' use Try Catch block for all Methods not only the Main()
     class Program
     {
+        
         /// <summary>
         /// The main method, vill handle the menues for the program
         /// </summary>

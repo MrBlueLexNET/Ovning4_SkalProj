@@ -35,14 +35,42 @@ namespace SkalProj_Datastrukturer_Minne.Tests
         { 
         
         }
-        [Fact]
+        [Theory]
+        [InlineData (true, "(())")]
+        [InlineData(true, "{}")]
+        [InlineData(true, "[({})]")]
+        [InlineData(true, "List<int> list = new List<int>() { 1, 2, 3, 4 };")]
         /*
         * CheckParanthesis: method to check if the paranthesis in a string is Correct or incorrect.
         * Example of correct: (()), {}, [({})],  List<int> list = new List<int>() { 1, 2, 3, 4 };
+        */
+        public void TestCheckParanthesis_TrueCases(bool expectedResult, string expectedString)
+        {
+            //Arrange
+            //Act
+            // Not developed yet.
+            throw new NotImplementedException();
+            //Assert
+            //Assert.Equal(expectedResult, actualResult);
+
+        }
+        [Theory]
+        [InlineData(false, "(()])")]
+        [InlineData(false, "[)")]
+        [InlineData(false, "{[()}]")]
+        [InlineData(false, "List<int> list = new List<int>() { 1, 2, 3, 4 );")]
+        /*
+        * CheckParanthesis: method to check if the paranthesis in a string is Correct or incorrect.
         * Example of incorrect: (()]), [), {[()}],  List<int> list = new List<int>() { 1, 2, 3, 4 );
         */
-        public void CheckParanthesis()
+        public void TestCheckParanthesis_FalseCases(bool expectedResult, string expectedString)
         {
+            //Arrange
+            //Act
+            // Not developed yet.
+            throw new NotImplementedException();
+            //Assert
+            //Assert.Equal(expectedResult, actualResult);
 
         }
     }
