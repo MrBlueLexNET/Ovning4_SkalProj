@@ -349,10 +349,8 @@ namespace SkalProj_Datastrukturer_Minne
              * Example of incorrect: (()]), [), {[()}],  List<int> list = new List<int>() { 1, 2, 3, 4 );
              */
 
-            //FIXED: 2 Manual tests failed to pass validation. Double check the logic!
-            //(()) Not valid!should be correct
-            //string str = "[({})]";
-            //[({ })] Not valid!should be correct
+            //TODO: 1 Manual test failed to pass validation. Double check the logic!
+            //REF: In the latest nightly build CheckParanthesis() returm incorrect for string "List<int> list = new List<int>() { 1, 2, 3, 4 };" 
 
             //1. Create a Dictionary Key type and Value Type 
             Dictionary<char, char> paranthesisDico = new Dictionary<char, char>()
@@ -368,11 +366,6 @@ namespace SkalProj_Datastrukturer_Minne
             //Queue Collection in C#
             //Used when the data items need to be arranged in a FIFO (First In First Out) manner.
             /**********************************************************************/
-
-
-            //string str = "((f[Hello World;]))";//Valid when using Queue Left and Stack Right
-            //string str = "List<int> lista = new List<int>(){2, 3, 4};";//Valid when using Queue Left and Queue Right
-            //string str = "{[()}";//Invalid
 
             Stack<char> stackLeftParenthesis = new Stack<char>();//Define a stack for chars to be stored for retreiving left Parenthesis
             Stack<char> stackRightParenthesis = new Stack<char>();//Define a stack for chars to be stored for retreiving right Parenthesis
